@@ -1,37 +1,32 @@
 class Solution {
     public int numSquares(int n) {
-        int[] dp = new int[n+1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j * j <= i; j++){
-                dp[i] = Math.min(dp[i], dp[i - j*j] + 1);
-            }
+        if (isPerfectSquare(n))
+            return 1;
+
+        /////// checking for possibility of 4 ---> 4^a(8b+7)///////
+        while (n % 4 == 0) {
+            n = n / 4;
         }
-        return dp[n];
+        if (n % 8 == 7) {
+            return 4;
+        }
+        ///////////////////////////////////////////////////////////
+        
+        ////// possibility of 2 ---> where 2 numbers can be perfect squares///////
+        for (int i = 1; i * i <= n; i++) {
+            int otherHalf = n - (i * i);
+
+            if (isPerfectSquare(otherHalf))
+                return 2;
+        }
+        /////////////////////////////////////////////////////////////////////////
+        
+        return 3;
+        // Since, our solution lies between 1-4, for anything else return 3
     }
     
-//     public int numSquares(int n) {
-//         Queue<Integer> q = new LinkedList();
-//         int step = 0;
-//         Set<Integer> visited = new HashSet();
-//         q.add(0);
-//         visited.add(0);
-
-//         while(!q.isEmpty()){
-//             int size = q.size();
-//             ++step;
-//             for(int i = 0; i < size; ++i){
-//                 int remian = n - q.remove();
-//                 for(int j = 1; j <= Math.sqrt(remian); ++j){
-//                     int v = n - remian + j * j;
-//                     if(v == n) return step;
-//                     if(!visited.add(v)) continue;
-//                     q.add(v);
-//                 }
-//             }
-//         }
-
-//         return n;
-//     }
+    private boolean isPerfectSquare(int n) {
+        double sq = Math.sqrt(n);
+        return Math.ceil(sq) == Math.floor(sq);
+    }
 }
