@@ -1,5 +1,5 @@
 class Solution {
-    public int maxCoins(int[] iNums) {
+    public int maxCoins33(int[] iNums) {
         int[] nums = new int[iNums.length + 2];
         int n = 1;
         for (int x : iNums) 
@@ -21,4 +21,28 @@ class Solution {
         
         return dp[0][n - 1];
     }
+    
+    public int maxCoins(int[] inums) {
+		int[] nums = new int[inums.length + 2];
+		nums[0] = 1;
+		nums[inums.length + 1] = 1;
+		for (int i = 1; i < nums.length - 1; i++) {
+			nums[i] = inums[i - 1];
+		}
+
+		int n = nums.length;
+
+		int[][] dp = new int[n][n];
+
+		for (int gap = 2; gap < n; gap++) {
+			for (int l = 0; l < n - gap; l++) {
+				int r = l + gap;
+
+				for (int i = l + 1; i < r; i++) {
+					dp[l][r] = Math.max(dp[l][r], nums[l] * nums[i] * nums[r] + dp[l][i] + dp[i][r]);
+				}
+			}
+		}
+		return dp[0][n - 1];
+	}
 }
