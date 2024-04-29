@@ -1,51 +1,29 @@
 class Solution {
-    public int maxSubArray(int[] nums) {
-        int tempmax = 0;
-        int max = Integer.MIN_VALUE;
-        
-        for(int val:nums){
-            tempmax = Math.max(tempmax+val,val);
-            max = Math.max(max,tempmax);
+    public int maxSubArray(int[] arr) {
+        int maxi = Integer.MIN_VALUE; // maximum sum
+        int sum = 0;
+        int n = arr.length;
+
+        for (int i = 0; i < n; i++) {
+
+            sum += arr[i];
+
+            if (sum > maxi) {
+                maxi = sum;
+            }
+
+            // If sum < 0: discard the sum calculated
+            if (sum < 0) {
+                sum = 0;
+            }
         }
-        
-        return max;
-        
+
+        // To consider the sum of the empty subarray
+        // uncomment the following check:
+
+        //if (maxi < 0) maxi = 0;
+
+        return maxi;
     }
-    // public int maxSubArray(int[] nums) {
-    //     return Subarray(nums, 0 ,nums.length -1 );
-    // }
-    // public int Subarray(int[] A,int left, int right){
-    //     if(left == right){return A[left];}
-    //     int mid = left + (right - left) / 2;
-    //     int leftSum = Subarray(A,left,mid);// left part 
-    //     int rightSum = Subarray(A,mid+1,right);//right part
-    //     int crossSum = crossSubarray(A,left,right);// cross part
-    //     if(leftSum >= rightSum && leftSum >= crossSum){// left part is max
-    //         return leftSum;
-    //     }
-    //     if(rightSum >= leftSum && rightSum >= crossSum){// right part is max
-    //         return rightSum;
-    //     }
-    //     return crossSum; // cross part is max
-    // }
-    // public int crossSubarray(int[] A,int left,int right){
-    //     int leftSum = Integer.MIN_VALUE;
-    //     int rightSum = Integer.MIN_VALUE;
-    //     int sum = 0;
-    //     int mid = left + (right - left) / 2;
-    //     for(int i = mid; i >= left ; i--){
-    //         sum = sum + A[i];
-    //         if(leftSum < sum){
-    //             leftSum = sum;
-    //         }
-    //     }
-    //     sum = 0;
-    //     for(int j = mid + 1; j <= right; j++){
-    //         sum = sum + A[j];
-    //         if(rightSum < sum){
-    //             rightSum = sum;
-    //         }
-    //     }
-    //     return leftSum + rightSum;
-    // }
+
 }
