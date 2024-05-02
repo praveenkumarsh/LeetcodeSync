@@ -1,16 +1,18 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int[] index = new int[128];
-        int ans = 0;
-        
-        for(int j=0,i=0;j<s.length();j++){
-            i = Math.max(index[s.charAt(j)], i);    //Set starting point of current non repeating substring 
-            ans = Math.max(ans, j - i + 1);         //longest substring length
-            
-            index[s.charAt(j)] = j+1; //Set last location of current character (if repeated)
+        HashMap < Character, Integer > mpp = new HashMap < Character, Integer > ();
+
+        int left = 0, right = 0;
+        int n = s.length();
+        int len = 0;
+        while (right < n) {
+            if (mpp.containsKey(s.charAt(right))) left = Math.max(mpp.get(s.charAt(right)) + 1, left);
+
+            mpp.put(s.charAt(right), right);
+
+            len = Math.max(len, right - left + 1);
+            right++;
         }
-        return ans;
-        
+        return len;
     }
 }
-
