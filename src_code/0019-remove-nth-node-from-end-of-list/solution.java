@@ -9,23 +9,31 @@
  * }
  */
 class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode temp = new ListNode(0);
-        temp.next = head;
-        ListNode temp1 = temp;
-        ListNode temp2 = temp;
-        while(n-->=0){
-            temp1 = temp1.next;
+    // Function to delete the Nth node from the end of the linked list
+    public ListNode removeNthFromEnd(ListNode head, int N) {
+        // Create two pointers, fastp and slowp
+        ListNode fastp = head;
+        ListNode slowp = head;
+
+        // Move the fastp pointer N nodes ahead
+        for (int i = 0; i < N; i++)
+            fastp = fastp.next;
+
+        // If fastp becomes null, the Nth node from the end is the head
+        if (fastp == null)
+            return head.next;
+
+        // Move both pointers until fastp reaches the end
+        while (fastp.next != null) {
+            fastp = fastp.next;
+            slowp = slowp.next;
         }
-         // for (int i = 1; i <= n + 1; i++) {
-         //    temp1 = temp1.next;
-         // }
-        while(temp1!=null){
-            temp1 = temp1.next;
-            temp2 = temp2.next;
-        }
-        
-        temp2.next = temp2.next.next;
-        return temp.next;
+
+        // Delete the Nth node from the end
+        ListNode delNode = slowp.next;
+        slowp.next = slowp.next.next;
+        delNode = null;
+        return head;
     }
+
 }
