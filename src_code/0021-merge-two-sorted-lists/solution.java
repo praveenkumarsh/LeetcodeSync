@@ -9,46 +9,38 @@
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if(l1==null){
-            return l2;
-        }
-        if(l2==null){
-            return l1;
-        }
-        ListNode dummy = new ListNode(0);
-        ListNode res = dummy;
-        while(l1!=null&&l2!=null){
-            if(l1.val<l2.val){
-                dummy.next = new ListNode(l1.val);
-                l1 = l1.next;
-                dummy = dummy.next;
-            }else if(l2.val<l1.val){
-                dummy.next = new ListNode(l2.val);
-                l2 = l2.next;
-                dummy = dummy.next;
-            }else{
-                dummy.next = new ListNode(l1.val);
-                dummy = dummy.next;
-                dummy.next = new ListNode(l2.val);
-                l1 = l1.next;
-                l2 = l2.next;
-                dummy = dummy.next;
-                
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+        // Create a dummy node to serve
+        // as the head of the merged list
+        ListNode dummyNode = new ListNode(-1);
+        ListNode temp = dummyNode;
+
+        // Traverse both lists simultaneously
+        while (list1 != null && list2 != null) {
+            // Compare elements of both lists and
+            // link the smaller node to the merged list
+            if (list1.val <= list2.val) {
+                temp.next = list1;
+                list1 = list1.next;
+            } else {
+                temp.next = list2;
+                list2 = list2.next;
             }
+            // Move the temporary pointer
+            // to the next node
+            temp = temp.next;
         }
-        
-        while(l1!=null){
-            dummy.next = new ListNode(l1.val);
-            dummy = dummy.next;
-            l1 = l1.next;
+
+        // If any list still has remaining
+        // elements, append them to the merged list
+        if (list1 != null) {
+            temp.next = list1;
+        } else {
+            temp.next = list2;
         }
-        while(l2!=null){
-            dummy.next = new ListNode(l2.val);
-            dummy = dummy.next;
-            l2 = l2.next;
-        }
-        return res.next;
-        
+        // Return the merged list starting
+        // from the next of the dummy node
+        return dummyNode.next;
     }
 }
