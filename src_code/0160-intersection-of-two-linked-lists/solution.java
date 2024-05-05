@@ -10,43 +10,18 @@
  * }
  */
 public class Solution {
+    //utility function to check presence of intersection
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null)
-            return null;
-        ListNode headAPointer = headA;
-        ListNode headBPointer = headB;
+        ListNode d1 = headA;
+        ListNode d2 = headB;
         
-        while(headAPointer != headBPointer){
-            if (headAPointer == null)
-                headAPointer = headB;
-            else
-                headAPointer = headAPointer.next;
-            if (headBPointer == null)
-                headBPointer= headA;
-            else
-                headBPointer = headBPointer.next;
+        while(d1 != d2) {
+            d1 = d1 == null? headB:d1.next;
+            d2 = d2 == null? headA:d2.next;
+
+            System.out.println("===== d1 : "+ (d1 == null ? null : d1.val) + " | d2 : " + (d2 == null ? null : d2.val));
         }
-        return headAPointer;
         
-//         HashSet<ListNode> hset = new HashSet<>();
-//         while(headA!=null||headB!=null){
-//             if(headA!=null){
-//                 if(hset.contains(headA)){
-//                    return headA; 
-//                 }
-//                 hset.add(headA);
-//                 headA = headA.next;
-//             }
-//             if(headB!=null){
-//                 if(hset.contains(headB)){
-//                    return headB; 
-//                 }
-//                 hset.add(headB);
-//                 headB = headB.next;
-//             }
-            
-//         }
-//         return null;
-        
+        return d1;
     }
 }
